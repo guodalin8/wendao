@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE jdbc-config [ 
+	<!ELEMENT jdbc-config ( config+ ) >
+	
+	<!ELEMENT config ( url , driver , username , password , auto-commit , isolation ) >
+		<!ATTLIST config id CDATA #REQUIRED> 
+		<!ATTLIST config use (true|false) #REQUIRED> 
+	
+	<!ELEMENT url (#PCDATA) >
+	<!ELEMENT driver (#PCDATA) >
+	<!ELEMENT username (#PCDATA) >
+	<!ELEMENT password (#PCDATA) >
+	<!ELEMENT auto-commit (#PCDATA) >
+	<!ELEMENT isolation (#PCDATA) >
+
+]>
+
+<jdbc-config>
+
+	<config id="mysql" use="true" >
+		<url>jdbc:mysql://127.0.0.1:3306/wendao?useUnicode=true&amp;characterEncoding=utf8</url>
+		<driver>com.mysql.jdbc.Driver</driver>
+		<username>root</username>
+		<password>12345678</password>
+		<auto-commit>false</auto-commit>
+		<isolation>READ_COMMITTED</isolation>
+	</config>
+	
+</jdbc-config>

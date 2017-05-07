@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>登录问道</title>
+
+    <link rel="shortcut icon" href="images/icon.png" type="image/png">
+
+    <link rel="stylesheet" href="styles/general.css">
+    <link rel="stylesheet" href="styles/cell.css">
+    <link rel="stylesheet" href="styles/form.css">
+
+    <link rel="stylesheet" href="awesome/css/font-awesome.min.css">
+    
+    <script type="text/javascript" src="js/wendao.js"></script>
+
+    <style type="text/css" >
+
+        .logo-container {
+            margin-top: 50px ;
+        }
+        .logo-container img {
+            width: 100px ;
+        }
+
+        .message-container {
+            height: 80px ;
+        }
+
+        .link-container {
+            height: 40px ;
+            line-height: 40px ;
+        }
+
+        .link-container a {
+            text-decoration: none ;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div class="container logo-container">
+    <img src="images/logo-red.png" >
+</div>
+<div class="container title-container">登录问道，求学问道</div>
+<div class="container form-container">
+	<!-- 指定将表单提交给 login.do  -->
+    <form action="/wendao/login.do" method="post">
+        <div class="form"> <!-- 注册表单开始 -->
+
+            <div class="form-row">
+                        <span class="cell-1">
+                            <i class="fa fa-user"></i>
+                        </span>
+                        <span class="cell-11" style="text-align: left;">
+                            <input type="text" name="username" placeholder="请输入用户名">
+                        </span>
+            </div>
+
+            <div class="form-row">
+                        <span class="cell-1">
+                            <i class="fa fa-key"></i>
+                        </span>
+                        <span class="cell-11" style="text-align: left;">
+                            <input type="password" name="password" placeholder="请输入密码">
+                        </span>
+            </div>
+
+            <div class="form-row">
+                        <span class="cell-7">
+                            <input type="text" name="verifyCode" placeholder="请输入验证码">
+                        </span>
+                        <span class="cell-5" style="text-align: center;">
+                        	<!-- this 相当于 汉字中的 "我" ，圆点相当于汉字中的 "的" -->
+                            <img src="/wendao/verify/login.do" onclick="myRefersh(this)" >
+                        </span>
+            </div>
+
+            <div class="form-row" style="border: none;">
+                        <span class="cell-6" style="text-align: left">
+                           <input type="reset" value="重置">
+                        </span>
+                        <span class="cell-6"  style="text-align:right;">
+                            <input type="submit" value="登录">
+                        </span>
+            </div>
+
+        </div> <!-- 注册表单结束 -->
+    </form>
+</div>
+<div class="container message-container">
+    <!-- 显示提示信息的地方 -->
+    #if( $loginFail ) 
+   		$loginFail
+   		$scope.remove( $session , 'loginFail' )
+    #end
+</div>
+
+<div class="container link-container">
+    <a href="regist.html" > 没有问道帐号?点击这里注册问道</a>
+    |
+    <a href="index.html" >返回首页</a>
+</div>
+
+<div class="container copyright-container">
+    &copy; 2017 问道版权所有
+</div>
+
+</body>
+</html>

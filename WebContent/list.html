@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="shortcut icon" href="$path/images/icon.png" type="image/png">
+	    <link rel="stylesheet" href="$path/styles/general.css">
+	    <link rel="stylesheet" href="$path/styles/cell.css">
+	    <link rel="stylesheet" href="$path/styles/wendao.css">
+	</head>
+	<body>
+	
+		## 登录状态栏 开始
+		<div class="login-status-container  auto-height">
+				<span class="welcome cell-8">
+					## 在 $ 之后 表达式之前使用 ! 表示 安静模式 ( 静默模式 )
+					<b>欢迎$!user.username来到问道</b>
+				</span>
+				<span class="login-operation cell-4">
+					#if( $user )
+						<a href="$path/ask.html">提问</a>
+						<em>|</em>
+						<a href="">我的提问</a>
+						<em>|</em>
+						<a href="$path/logout.do">注销</a>
+					#else
+						<a href="$path/login.html">登录</a>
+						<em>|</em>
+						<a href="$path/regist.html">注册</a>
+					#end
+				</span>
+		</div> ## 登录状态栏 结束
+		
+		## 标志区域
+		<div class="brand-container  auto-height">
+			<div class="logo cell-2">
+				<a href="$path"></a>
+			</div>
+			<div class="slogan cell-10">
+				<div>
+				问题列表
+				</div>
+			</div>
+		</div>
+		
+		## 列表区域
+		<div class="topic-list-container clear">
+			<!-- 问题列表的标题 -->
+			<div class="topic-list-header row clear">
+				<span class="topic-item-index cell-1">序号</span>
+				<span class="topic-item-title cell-5" style="text-align: left ;">标题</span>
+				<span class="topic-item-time cell-3">提问时间</span>
+				<span class="topic-item-user cell-2">提问者</span>
+				<span class="topic-item-operation cell-1">
+					#if( $user )
+						解答问题
+					#end
+				</span>
+			</div>
+
+				## 问题列表开始
+					##  每循环一次从 $topics 集合中取出一个 Topic 对象 放到 $topic 中
+					#foreach( $topic in $topics )
+			
+					<div class="topic-item row clear odd">
+							<span class="topic-item-index cell-1">$topic.id</span>
+							<span class="topic-item-title cell-5" style="text-align: left ;">
+								<a href="$path/detail.do?id=$topic.id">$topic.title</a>
+							</span>
+							<span class="topic-item-time cell-3"> $topic.publishTime </span>
+							<span class="topic-item-user cell-2"> $topic.user.username</span>
+							<span class="topic-item-operation cell-1"> 
+								#if( $user )
+									<a href="$path/answer.do?id=$topic.id">解答</a>
+								#end
+							</span>
+					</div>
+					
+		
+				#end
+			## 问题列表结束
+			
+		</div>## 列表区域结束
+		
+		<div class="line"></div>
+		
+		<div class="container link-container">
+		    <a href="$path/ask.html" >发起新问题</a>
+		    |
+		    <a href="$path/index.html" >返回首页</a>
+		</div>
+		
+		<div class="container copyright-container">
+		    &copy; 2017 问道版权所有
+		</div>
+	
+	</body>
+</html>

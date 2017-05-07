@@ -1,0 +1,166 @@
+@charset "UTF-8";
+
+body {
+    margin: 0px 0px ; /* 先上下  后左右*/
+    padding: 0px 0px ;
+    font-size: 14px;
+    font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", "Hiragino Sans GB", "Heiti SC", "WenQuanYi Micro Hei", sans-serif;
+    font-weight: lighter;
+}
+
+.container {
+    /* border: 1px solid red ; */
+    text-align: center ;
+    height: auto ; /*高度自动适应*/
+    overflow: hidden ; /*为解决内部有浮动元素时高度自动适应而添加*/
+}
+
+/*选择页面上所有的 div 标记 */
+div {
+    display: block ; /* 让 div 默认以 block 呈现 */
+}
+
+/* 选择页面上所有的 img 标记 */
+img {
+    border: none ; /*取消所有图片的边框*/
+}
+
+/* 选择页面上所有的 a 标记 */
+a {
+    text-decoration: none ; /*取消所有 超链接 的 下划线*/
+    blr: expression( this.onFocus=this.blur() ); /* 去除超链接周围的虚框 ( For IE  )*/
+    outline: none ; /* 去除超链接周围的虚框 ( For FireFox ) */
+}
+
+/* 用伪类 设置 a 元素在 鼠标悬浮时的样式 以及 激活链接时的状态*/
+a:hover,
+a:active {
+    cursor: pointer; /*设置 鼠标悬浮到链接 和 链接被激活后 的 光标样式*/
+}
+
+.font-normal {
+    font-weight: normal ;
+}
+
+.font-bold {
+    font-weight: bold ;
+}
+
+/* 设置元素高度自动适应 (当元素内部包含浮动元素时使用) */
+.auto-height {
+    height: auto !important; /*高度自动适应*/
+    overflow: hidden; /*当内容超过边界时隐藏 , 配合高度为 auto 一起实现 高度自动适应( 尤其是元素内部有浮动元素时 ) */
+}
+
+/* 专门用来清除浮动 */
+.clear {
+    clear: both ; /*清除两边的浮动*/
+}
+
+/* 用 div 实现在页面上显示一个 只有一个像素的横线 */
+.line {  height: 0px ; border-bottom: 1px solid #d3d3d3 ; margin: 0px auto ;}
+
+/* 当需要 通栏 时使用 across ,
+ * 它可以让 元素 从 页面最左边 抵达 页面 最右边 ,
+ * 如果 元素 内部有浮动子元素,并且希望高度自动适应,则需要配合 .auto-height 一起使用
+ * */
+.across {
+    min-width: 1000px; /*设置最小宽度*/
+    clear: both;
+}
+
+.align-center-container {
+    text-align: center; /*针对IE浏览器居中对齐*/
+}
+
+.align-center {
+    margin: 0px auto; /* DIV Center : For Gecko , WebKit , Presto(Opera) , Blink ( Google ) */
+    text-align: left;
+    border: 0px;
+}
+
+/**  定义容器的 内发光效果 (用边框的内阴影实现) */
+.shadow-inset {
+    border: 1px solid #d3d3d3;
+    border-radius: 3px;
+    box-shadow: 0px 0px 4px 3px #eeeeee inset;
+}
+
+/**  定义容器的 外发光效果 (用边框的外阴影实现) */
+.shadow-outside {
+    margin: 10px 10px;
+    border: 1px solid #d3d3d3;
+    border-radius: 3px;
+    box-shadow: 0px 0px 5px 4px #eeeeee;
+}
+
+/** 定义一个遮罩层的样式*/
+.mask {
+    display: none ;
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    z-index:2000;
+    background-color: rgba(239, 239, 239, 0.5);
+    filter:alpha(opacity=50);
+}
+
+/**
+  * 用来在 mask 上显示一个 对话框
+  *  对话框的宽度 和 高度 需要根据需要指定,比如 宽 400px , 高 300px
+  *  为了让 对话框 在正中间显示,
+  *         需要将 对话框的 margin-top 调整为 负的二分之一高 ( 比如 -150px )
+  *         需要将 对话框的 margin-left 调整为 负的二分之一宽 ( 比如 -200px )
+  *         如果有边框,还要考虑边框的影响
+  **/
+.mask-dialog {
+    position:absolute;
+    left:50%;
+    top:50%;
+    z-index:2001;
+    background-color: #FAFAFA;
+    border: 1px solid #dedede ;
+    border-radius: 4px ;
+}
+
+.mask-dialog-title {
+    height: 30px ;
+    border-bottom: 1px solid #dedede ;
+}
+
+.mask-dialog-title b {
+    float: left ;
+    line-height: 30px ;
+    font-size: 14px ;
+    font-weight: normal ;
+    text-align: left ;
+    margin-left: 6px ;
+}
+
+.mask-dialog-title i {
+    float: right ;
+    height: 12px ;
+    width: 12px ;
+    margin-top: 8px ;
+    margin-right: 8px ;
+    border-radius: 2px ;
+    /*border: 1px solid #dedede ;*/
+    background-image: url( "../images/icons-tx.png" )  ;
+    background-position: -90px -50px ;
+    background-repeat: no-repeat ;
+}
+
+.mask-dialog-title i:hover {
+    background-position: -106px -50px ;
+}
+
+/** 如果某个区域的文字禁止选择复制,添加该样式即可*/
+.disable-select {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;
+}

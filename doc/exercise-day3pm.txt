@@ -1,0 +1,61 @@
+
+URL : 统一资源定位器     ------------->  网址
+
+      协议:主机地址:端口/资源名称
+      http://nodejs.org:80/index.html    网址
+      
+      MySQL 数据库的 JDBC 连接地址:
+      jdbc:mysql://localhost:3306/wendao?useUnicode=true&characterEncoding=utf8
+      
+      Oracle 数据库的 JDBC 连接地址:
+      jdbc:oracle:thin:@localhost:1521:oracle
+   
+
+1、创建 VerifyCodeServlet 实现 验证码
+
+      目前应用场景有两处:   注册、登录
+      
+      urlPatterns 属性用来指定 前端页面上访问 Servlet 的虚拟路径
+      
+      将 生成的 图片验证码 上的 字符串保存到当前请求关联的 会话 ( HttpSession ) 中:
+      
+      session.setAttribute( uri , code ) ;
+      
+      将来可以根据 相应的 uri 来获得存储的那个字符串，用来实现比较
+      
+      将 注册 和 登录 页面上的 验证码图片的 src 属性 更换为相对应的 urlPattern
+      
+      注册页面:
+      		<img src="/wendao/verify/regist.do" >
+      
+      登录页面:
+	    	<img src="/wendao/verify/login.do" >
+      
+
+2、实现 异步刷新 验证码 ( 异步请求 VerifyCodeServlet )
+
+      这里不采用 AJAX 方式去实现。
+      
+      在 js 目录中 单独创建 wendao.js 并完成 myRefersh 函数，之后在 登录 和 注册页面采用点击事件触发函数即可
+      
+      <img src="/wendao/verify/login.do" onclick="myRefersh(this)" >
+
+3、创建 LoginServlet 实现登录操作
+
+		a>、获得来自 页面 表单上的数据
+		b>、获得 在 会话 中存储的那个 为登录进行验证的 验证码
+		c>、比较用户已输入的验证码是否正确 ( 就是跟 session 中存储的那个 验证码 进行比较 )
+		d>、根据 用户名 和 密码 从数据库中查询数据
+		e>、如果查询到数据，就包装到一个对象中
+		f>、将 User 对象 放入到 会话中
+		g>、重定向到 list.html ( 到了 list.html 后 需要显示 登录后的用户的信息，比如用户名 )
+		
+		当 验证码 错误 或 用户名 错误 或 密码错误 时:
+		  i>、设置提示信息后
+		 ii>、重新返回到 登录页面
+		iii>、在登录页面中显示相应的提示信息
+
+4、作业: 
+
+      按照 "列表页面.jpg" 中的样式，完成 list.html 页面，将来用于显示问题列表
+

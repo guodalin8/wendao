@@ -1,0 +1,81 @@
+@charset "UTF-8";
+
+/** 栅格系统 使用说明:
+*    假设页面上上的某一行 ( 用 class= "row" 表示 ) 可以分为 12 等份,
+*    12等份中的每一份就是一个 格子 ( 用 class="cell-1" 表示 ) ,单个 cell 宽度 为 十二分之一 行 , 即 8.3333333333%
+*    使用举例:
+*    <div class="row">
+*          <span class="cell-5" >一个5倍于单个单元格的格子</span>
+*          <span class="cell-7" >一个7倍于单个单元格的格子</span>
+*    </div>
+*    注意, 两部分 加起来,刚好是 满行 ( 12 个格子的空间 )
+**/
+
+.row {
+    width: 100%; /*设置一个行的宽度为100%*/
+    height: auto !important; /*高度自动适应*/
+    overflow: hidden; /*当内容超过边界时隐藏 , 配合高度为 auto 一起实现 高度自动适应( 尤其是元素内部有浮动元素时 ) */
+}
+
+.cell-1, .cell-2, .cell-3, .cell-4, .cell-5, .cell-6, .cell-7, .cell-8, .cell-9, .cell-10, .cell-11, .cell-12 {
+    float: left; /*设置栅格系统的浮动方式*/
+}
+
+.cell-1 {  width : 8.333333333%; }
+.cell-2 {  width : 16.666666667%; }
+.cell-3 {  width : 25%; }
+.cell-4 {  width : 33.333333333%; }
+.cell-5 {  width : 41.666666667%; }
+.cell-6 {  width : 50%; }
+.cell-7 {  width : 58.333333333%; }
+.cell-8 {  width : 66.666666667%; }
+.cell-9 {  width : 75%; }
+.cell-10 {  width : 83.333333333%; }
+.cell-11 {  width : 91.666666667%; }
+.cell-12 {  width : 100%; }
+
+
+
+.offset-1 {
+    margin-left: 8.3333333333%; /*假设每一行可以等分为12分,则每份占8.3333333333% */
+}
+
+.offset-2 {
+    margin-left: 16.6666666667%; /*假设每一行可以等分为12分,则两份占16.6666666667% */
+}
+
+.offset-3 {
+    margin-left: 25%; /*假设每一行可以等分为12分,则三份占25% */
+}
+
+.offset-4 {
+    margin-left: 33.3333333333%;
+}
+
+.offset-5 {
+    margin-left: 41.6666666667%;
+}
+
+.offset-6 {
+    margin-left: 50%;
+}
+
+.offset-7 {
+    margin-left: 58.3333333333%;
+}
+
+.offset-8 {
+    margin-left: 66.6666666667%;
+}
+
+.offset-9 {
+    margin-left: 75%;
+}
+
+.offset-10 {
+    margin-left: 83.3333333333%;
+}
+
+.offset-11 {
+    margin-left: 91.6666666667%;
+}

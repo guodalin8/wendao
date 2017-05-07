@@ -1,0 +1,137 @@
+
+1、实现登录状态栏
+
+      在 login-status-container 区域中使用 安静模式 获取用户名:
+      
+      	$!user.username
+      	
+     在 login-status-container 区域中使用 if 和 else 指令 控制显示那些链接:
+     
+     				#if( $user )
+						<a href="$path/ask.html">提问</a>
+						<em>|</em>
+						<a href="">我的提问</a>
+						<em>|</em>
+						<a href="$path/logout.do">注销</a>
+					#else
+						<a href="$path/login.html">登录</a>
+						<em>|</em>
+						<a href="$path/regist.html">注册</a>
+					#end
+      
+
+2、实现注销操作
+
+		页面上所有有 注销 二字的，一律加上超链接:
+		
+				<a href="$path/logout.do" >注销</a>
+		
+		开发 LogoutServlet 类，实现以下操作:
+		
+				HttpSession session = request.getSession();
+				// 将 当前会话废弃 ( 其中的数据也就丢失了 )
+				session.invalidate();
+				
+				// 注销后去往 列表页面 ( list.html 只负责显示，list.do 负责查询 )
+				response.sendRedirect( request.getContextPath() + "/list.do" );
+		
+3、列表的显示问题
+
+		   list.do 对应的是 ListServlet ，专门负责将 数据库中的所有问题查询出来，并放置到 application 中
+		   
+		   list.html 页面仅仅负责从 application 中取出数据，显示到页面上。
+		   
+		   因此，
+		   除了 list.do 直接跳转到 list.html 外，
+		   其它所有的直接跳转到 list.html 的链接，应该全部更换成 跳转到 list.do
+		   list.do ( 对应的是 ListServlet ) 会跳转到 list.html ( 最终显示的是 list.html )
+
+4、控制 ask.html 页面的显示问题:
+
+      没有登录，不允许看到 提问界面:
+      
+      #if( $user ) 
+      		把提问区域放到这里
+      #end
+      
+5、实现 "详情" 功能 ( 第一部分 )
+
+		在 列表页面上 点击 标题 打开详情页面
+		
+		a>、列表页面上的每个标题都是一个链接，链接中需要包含 该问题的 主键值
+		
+				<a href="$path/detail.do?id=$topic.id">$topic.title</a>
+
+		b>、开发 detail.do 对应的 Servlet :  DetailServlet
+		
+				接受来自请求的 参数值:
+				
+				      String id = request.getParameter( "id" );
+		
+				将字符串转换成 int 数值:
+				
+					int topicId = Integer.parseInt( id ) ;
+		
+				根据得到的 问题的 主键 查询数据库，得到 详细信息
+				
+					ResultSet rs = JdbcHelper.query( SQL,  topicId );
+		
+				将结果集中的数据封装到 Topic 对象中
+				
+					Topic t = new Topic();
+					t.setXxx(  rs.getXxx( n ) );
+					
+				获得提问者
+				
+					ResultSet rs = JdbcHelper.query( SQL,  userId );
+				
+					User u = new User();
+					u.setXxx( rs.getXxx( n ) );
+					t.setUser( u ) ;
+				
+				将 问题 放入到 session 中
+				
+					session.setAttribute( "topic" , t ); 
+				
+		c>、在页面上显示详细信息
+		
+						<div>
+							<h3>$topic.title</h3>
+							<div class="line"></div>
+							<div>
+								$topic.content
+							</div>
+							<div>
+								提问时间: $topic.publishTime / 提问地址: $topic.publishIp / 提问者: $topic.user.username
+							</div>
+						</div>
+						
+						值得注意的是，显示完毕，应该将该数据从 session 中及时清除:
+						$scope.remove( $session , 'topic' );
+
+6、实现 "解答" 功能
+
+		在 列表 页面中，对于所有的 "解答" 链接，都添加 id=xx
+		
+		开发 answer.do 对应的 Servet : AnswerServlet
+		
+			根据页面传递的 id 获得 问题的详情，并设置到 session 中
+			
+			去往 answer.html 页面
+		
+		answer.html 中显示 问题的详情，提供解答区域，可以用来解答
+		
+		开发 explain.do 对应的 Servet : ExplainServlet
+		
+		在 ExplainServlet 中 将 解答内容保存到 t_explain 表中
+
+
+7、实现 "详情" 功能 ( 第二部分 )
+
+		在 DetailServlet 中还需要为 当前问题 查询 所有的解答内容
+
+
+
+
+
+

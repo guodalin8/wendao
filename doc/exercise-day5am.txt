@@ -1,0 +1,76 @@
+
+1、实现 "列表" 功能
+
+     a>、查询数据库中的所有问题 ( ListServlet )
+     
+	             先 查询 所有题目，根据 发表时间 降序排列:
+		             	final String SQL = "SELECT id , title , publish_time , publish_ip , user_id FROM t_topic ORDER BY publish_time DESC" ;
+				     	ResultSet rs = JdbcHelper.query( SQL );
+			     
+			     将 查询到的 结果集 中的 每一行 数据都封装到 Topic 对象中，这些对象都放到一个集合中:
+				     	final List<Topic> topics = new ArrayList<>();
+						try {
+							while( rs.next() ){
+								Topic t = new Topic() ; // 创建对象 
+								t.setXxx( rs.getXxx( i ) ) ; // 封装数据
+								/** 将 本次循环 创建的对象(已经封装数据) 添加到 List 集合中 */
+								topics.add( t );
+							}
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+						
+     			为每个问题寻找提问者:
+		     			for( int i = 0 , len = topics.size() ; i < len ; i++ ){
+							Topic t = topics.get( i ) ; // 获得 题目
+							User u = t.getUser(); // 获得当前题目的User对象 ( 该对象中只有 id 没有其它数据 )
+							
+							// 根据 用户对象的 id 来查询 用户的信息
+							String querySQL = "SELECT id , username , password FROM t_user WHERE id = ? " ;
+							ResultSet userRs = JdbcHelper.query( querySQL , u.getId() );
+							try {
+								if( userRs.next() ) { // 如果查询到用户信息
+									u.setUsername( userRs.getString( 2 ) ); // 将 username 列的值设置到 用户对象的 username 属性中
+									u.setPassword( userRs.getString( 3 )); // 将 password 列的值设置到 用户对象的 password 属性中
+								}
+							} catch (SQLException e) {
+								e.printStackTrace();
+							}
+						}
+     			
+     b>、将这些数据保存到 application ( 指可以在 整个 Web 应用中直接使用的一个范围 )
+     		注意: 不要将 这些数据 放入到 会话 ( session ) 中
+     		
+		     		/** 将这些数据保存到 application **/
+					ServletContext application = request.getServletContext();
+					application.setAttribute( "topics" , topics );
+					
+					最后，再去往 list.html 页面:
+					response.sendRedirect( request.getContextPath() + "/list.html");
+
+     c>、在 list.html 页面上显示 application 中 "存储" 的这些数据
+     
+					       ## 问题列表开始
+										##  每循环一次从 $topics 集合中取出一个 Topic 对象 放到 $topic 中
+										#foreach( $topic in $topics )
+											<div class="topic-item row clear odd">
+												<span class="topic-item-index cell-1">$topic.id</span>
+												<span class="topic-item-title cell-5" style="text-align: left ;">
+													<a href="$path/detail.do">$topic.title</a>
+												</span>
+												<span class="topic-item-time cell-3"> $topic.publishTime </span>
+												<span class="topic-item-user cell-2"> $topic.user.username</span>
+												<span class="topic-item-operation cell-1"> 
+														<a href="$path/answer.do">解答</a>
+												</span>
+										</div>
+								#end
+							## 问题列表结束
+     
+     
+     
+     
+
+2、在 "提问" 功能中，提问之后不要直接去 list.html ，而应该先去 list.do ，再由 list.do 带到 list.html
+
+3、为 list.html  和  ask.html 美容 ( 作业 )

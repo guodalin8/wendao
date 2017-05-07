@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>提问</title>
+		<link rel="shortcut icon" href="$path/images/icon.png" type="image/png">
+	    <link rel="stylesheet" href="$path/styles/general.css">
+	    <link rel="stylesheet" href="$path/styles/cell.css">
+	    <link rel="stylesheet" href="$path/styles/wendao.css">
+	    
+	    <!-- 链接 simditor 的样式库 -->
+	   	<link rel="stylesheet"  href="$path/simditor/styles/simditor.css" type="text/css">
+		<!-- 导入 simditor 的 JavaScript 库 -->
+		<script type="text/javascript" src="$path/simditor/scripts/jquery.min.js"></script>
+		<script type="text/javascript" src="$path/simditor/scripts/module.js"></script>
+		<script type="text/javascript" src="$path/simditor/scripts/hotkeys.js"></script>
+		<script type="text/javascript" src="$path/simditor/scripts/uploader.js"></script>
+		<script type="text/javascript" src="$path/simditor/scripts/simditor.min.js"></script>
+	    
+	</head>
+	<body>
+	
+		## 登录状态栏 开始
+		<div class="login-status-container  auto-height">
+				<span class="welcome cell-8">
+					## 在 $ 之后 表达式之前使用 ! 表示 安静模式 ( 静默模式 )
+					<b>欢迎$!user.username来到问道</b>
+				</span>
+				<span class="login-operation cell-4">
+					#if( $user )
+						<a href="$path/ask.html">提问</a>
+						<em>|</em>
+						<a href="">我的提问</a>
+						<em>|</em>
+						<a href="$path/logout.do">注销</a>
+					#else
+						<a href="$path/login.html">登录</a>
+						<em>|</em>
+						<a href="$path/regist.html">注册</a>
+					#end
+				</span>
+		</div> ## 登录状态栏 结束
+		
+		<div class="brand-container  auto-height">
+			<div class="logo cell-2">
+				<a href="$path"></a>
+			</div>
+			<div class="slogan cell-10">
+				<div>
+				提问新问题
+				</div>
+			</div>
+		</div>
+		
+		<div class="container message-container">
+		    <!-- 显示提示信息的地方 -->
+		    #if( $askFail ) 
+		   		$askFail
+		   		$scope.remove( $session , 'askFail' )
+		    #end
+		</div>
+		
+		#if( $user ) 
+		<!-- 提问表单 提交给 ask.do 对应的 Servlet 处理  -->
+		<form action="$path/ask.do" method="post" >
+		<!-- 提问区域 开始 -->
+		<div class="container  topic-ask-container clear shadow-outside auto-height" >
+			<!-- 问题的标题 和 提问按钮 -->
+			<div class="container  title-container">
+				<div class="cell-11">
+					<input type="text" name="title" placeholder="请输入你要提问的问题的标题"  style="width: 96%;">
+				</div>
+				<div class="cell-1">
+					<input type="submit" value="提问" >
+				</div>
+			</div>
+			
+			<div class="line"></div>
+			
+			<!-- 问题的内容 -->
+			<div>
+				<textarea name="content" id="contentEditor" ></textarea>
+				<script type="text/javascript" >
+					var editor = new Simditor( {
+						textarea : $('#contentEditor'),
+						placeholder : '请在这里输入问题的内容...',
+						toolbar : true 
+					} );
+				</script>
+			</div>
+			
+			<div class="line"></div>
+			
+			<!-- 最底部的提问按钮 -->
+			<div class="container  title-container">
+				<div class="cell-11" style="height: 1px ;"></div>
+				<div class="cell-1">
+					<input type="submit" value="提问" >
+				</div>
+			</div>
+		</div> <!-- 提问区域 结束 -->
+		</form>
+		#else
+			<div style="text-align:center ; min-height: 400px ; line-height: 400px ;">
+				登录以后才能发起提问，请<a href="$path/login.html" >登录</a>
+			</div>
+		#end
+		
+		<div class="line"></div>
+		
+		<div class="container link-container">
+		    <a href="$path/list.do" >问题列表</a>
+		    |
+		    <a href="$path/index.html" >返回首页</a>
+		</div>
+		
+		<div class="container copyright-container">
+		    &copy; 2017 问道版权所有
+		</div>
+		
+	</body>
+</html>

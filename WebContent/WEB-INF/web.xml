@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	id="WebApp_ID" version="3.1" metadata-complete="false">
+	
+	<!-- 字符编码过滤器 -->
+	<filter>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<filter-class>org.malajava.util.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+	
+	<!-- 鉴别浏览器的过滤器 -->
+	<filter>
+		<filter-name>IdentifyBrowserFilter</filter-name>
+		<filter-class>org.malajava.util.filter.IdentifyBrowserFilter</filter-class>
+		<init-param>
+			<param-name>browserConfigLocation</param-name>
+			<param-value>browser.properties</param-value>
+		</init-param>
+		<init-param>
+			<param-name>allowedAccess</param-name>
+			<param-value>/released</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>IdentifyBrowserFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- 用来处理 velocity 模版的 Servlet -->
+	<servlet>
+		<servlet-name>VelocityServlet</servlet-name>
+		<servlet-class>org.apache.velocity.tools.view.VelocityViewServlet</servlet-class>
+		<!-- 配置 初始化参数 -->
+		<init-param>
+			<param-name>org.apache.velocity.toolbox</param-name>
+			<param-value>toolbox.xml</param-value>
+		</init-param>
+		<!-- 当容器启动时就加载并初始化该Servlet -->
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>VelocityServlet</servlet-name>
+		<url-pattern>*.html</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>PreparedServlet</servlet-name>
+		<servlet-class>org.malajava.util.servlet.PreparedServlet</servlet-class>
+
+		<init-param>
+			<param-name>contextPathName</param-name>
+			<!-- 如果指定参数值是 path , 则完成以下操作:  application.setAttribute( "path" , contextPath )-->
+			<param-value>path</param-value>
+		</init-param>
+		
+		<init-param>
+			<param-name>frontPathName</param-name>
+			<!-- 如果指定参数值是 path ，则向Web客户端发送: window.path="/当前Web应用的路径"-->
+			<param-value>path</param-value>
+		</init-param>
+		
+		<!-- PreparedServlet 必须在 容器启动时就完成初始化操作-->
+		<load-on-startup>1</load-on-startup>
+		
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>PreparedServlet</servlet-name>
+		<url-pattern>/prepared.js</url-pattern>
+	</servlet-mapping>
+	
+</web-app>

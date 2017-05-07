@@ -1,0 +1,89 @@
+
+1、准备好 MySQL ，创建 wendao 数据库，创建 t_user 表 和 t_topic 表:
+
+			create  database  wendao  character  set  utf8 ;
+			
+			use  wendao ;
+			
+			 create table t_user (
+				     id int(10)  auto_increment ,
+				     username varchar(20) not null unique ,
+				     password varchar(18) not null ,
+				     primary key ( id )
+			 ) ;
+			 
+			 create table  t_topic (
+			      id  int(10) primary key auto_increment , 
+			      title varchar( 255 ) , 
+			      content  text ,
+			      publish_time timestamp ,
+			      user_id int(10) ,
+			      foreign key ( user_id ) references t_user ( id )
+			 );
+
+
+2、在 src 中创建 jdbc.xml 文件，内容如下:
+
+			<?xml version="1.0" encoding="UTF-8"?>
+			
+			
+			<!DOCTYPE jdbc-config [ 
+				<!ELEMENT jdbc-config ( config+ ) >
+				
+				<!ELEMENT config ( url , driver , username , password , auto-commit , isolation ) >
+					<!ATTLIST config id CDATA #REQUIRED> 
+					<!ATTLIST config use (true|false) #REQUIRED> 
+				
+				<!ELEMENT url (#PCDATA) >
+				<!ELEMENT driver (#PCDATA) >
+				<!ELEMENT username (#PCDATA) >
+				<!ELEMENT password (#PCDATA) >
+				<!ELEMENT auto-commit (#PCDATA) >
+				<!ELEMENT isolation (#PCDATA) >
+			
+			]>
+			
+			<jdbc-config>
+			
+				<config id="mysql" use="true" >
+					<url>jdbc:mysql://127.0.0.1:3306/wendao?useUnicode=true&amp;characterEncoding=utf8</url>
+					<driver>com.mysql.jdbc.Driver</driver>
+					<username>root</username>
+					<password>12345678</password>
+					<auto-commit>false</auto-commit>
+					<isolation>READ_COMMITTED</isolation>
+				</config>
+				
+			</jdbc-config>
+
+
+3、在 RegistServlet 中添加以下代码:
+
+        // 要保证 用户名 不为空 、密码不能为空 、两次输入的密码必须一致
+		if( StringHelper.notEmpty( username )  && StringHelper.notEmpty( password )  && StringHelper.equals( password , confirm) ) {
+			String SQL = "INSERT INTO t_user ( username , password ) VALUES ( ? , ? ) " ;
+			JdbcHelper.insert(SQL, false , username , password );
+			// 保存成功以后，应该去一个新的页面 (比如去 登录页面 )
+			response.sendRedirect( request.getContextPath() + "/login.html" );
+		} else {
+			// 从那里来回那里去
+			String referer = request.getHeader( "referer" ); // 获得从那里来
+			if( StringHelper.notEmpty( referer ) ) { // 判断是否获取到 来源
+				response.sendRedirect( referer );// 实现回那里去
+			} else {
+				// 如果没有获取到来源，就回到注册页面去
+				response.sendRedirect( request.getContextPath() + "/regist.html" );
+			}
+		}
+
+4、测试:
+
+      A: 在注册页面中填入数据后，点击注册，成功后，页面跳转到 登录页面，数据库中可以看到用户的数据
+      
+      B: 在注册页面中不填入任何数据，直接点击注册，失败后，页面跳转回原来的页面，数据库中没有添加任何数据
+
+
+
+
+
+

@@ -1,0 +1,116 @@
+
+钓鱼岛是中国的。
+
+ 官方网站: velocity.apache.org
+ 
+ Velocity 是一个 基于 Java 实现的 模板引擎 。
+ 
+ 0、在 Web 应用 的 WEB-INF/lib 目录中添加以下 jar 文件:
+ 
+			commons-beanutils-1.7.0.jar
+			commons-collections-3.2.1.jar
+			commons-digester-1.8.jar
+			commons-lang-2.5.jar
+			commons-logging-1.1.1.jar
+			velocity-1.7.jar
+			velocity-tools-2.0.jar
+ 
+ 1、在 Web 应用 的 WEB-INF/web.xml 中添加一个 Serlvet
+ 
+      	<servlet>
+			<servlet-name>VelocityServlet</servlet-name>
+			<servlet-class>org.apache.velocity.tools.view.VelocityViewServlet</servlet-class>
+		</servlet>
+		
+		<servlet-mapping>
+			<servlet-name>VelocityServlet</servlet-name>
+			<url-pattern>*.html</url-pattern>
+		</servlet-mapping>
+ 
+ 2、在 session 中存储的数据，在页面上显示之后，需要将这些数据从 session 中删除
+ 
+       2.1>  在 src 目录中提供一个 toolbox.xml ，其中的内容如下:
+       
+       			<?xml version="1.0" encoding="UTF-8"?>
+
+				<toolbox>
+				
+					<tool>
+						<key>xxx</key>
+						<scope>application</scope>
+						<class>org.malajava.util.ScopeHelper</class>
+					</tool>
+				
+				</toolbox> 
+				
+				注意:
+				<key> 和 </key> 之间的名称可以根据需要自己定义，不见得非要是 scope 
+       
+       2.2> 在 web.xml 中找到 VelocityViewServlet ，在 其中添加初始化参数:
+       
+		       <init-param>
+					<param-name>org.apache.velocity.toolbox</param-name>
+					<param-value>toolbox.xml</param-value>
+				</init-param>
+       
+       2.3> 让 容器 ( Tomcat ) 启动时就 加载并初始化 VelocityViewServlet
+       
+               <load-on-startup>1</load-on-startup>
+       
+       2.4> 在页面上通过 <key> 中指定的名称来使用 相应的类的 方法:
+       
+               $xxx.remove( $session , 'registFail' )
+ 
+ 
+  3、在 velocity 引擎中，有 4 个内置对象可以直接使用:
+  
+        $application 
+        
+        $session
+        
+        $request 
+        
+        $response
+        
+        所谓内置对象，就是可以在 velocity 模版中直接使用的对象。
+        
+        所谓 velocity 模版，就是含有 velocity 指令或表达式的页面，比如 regist.html
+ 
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+ 我们用到的 velocity 指令:
+ 
+    if 指令:
+ 
+		 #if( 条件 ) 
+		 	满足条件后显示的内容
+		 #end
+ 
+    else 指令
+    
+    	 #if( 条件 ) 
+		 	满足条件后显示的内容
+		 #else
+		 	不满足条件时的显示内容
+		 #end
+ 
+    elseif 指令
+    
+    	 #if( 条件一 ) 
+		 	满足条件一后显示的内容
+		 #elseif ( 条件二 )
+		 	满足条件二时的显示内容
+		 #else
+		 	不满足条件时的显示内容
+		 #end
+ 
+   foreach 指令
+   
+   		#foreach( ) 
+   		
+   		#end
+   
+ 
+
+
+

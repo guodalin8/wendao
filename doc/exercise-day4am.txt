@@ -1,0 +1,80 @@
+
+1、使用 velocity 搞定页面上的提示信息
+
+      velocity 的使用，请参看 velocity.txt
+      
+      在 Servlet 中的 相应位置 设置提示信息:
+         session.setAttribute( "registFail" , "提示信息的内容"  );
+         
+      到页面上可以使用 表达式直接取出:
+         $registFail
+      
+      当提示信息显示之后，及时删除:
+         $scope.remove( $session , 'registFail' )
+
+2、使用 PreparedServlet 解决所有页面 以及 JavaScript 中的路径问题
+
+      之前所有的路径都是 /wendao/login.do 、/wendao/regist.do 的形式
+      这里的 /wendao 是我们的 Web 应用的 路径，只能是写死的，
+      而一旦项目名称有变，需要全部手动去修改
+      
+      因此，我们需要让像  /wendao/login.do 、/wendao/regist.do 这样的路径
+      能够自动获得当前的 Web 应用的 名称，即使更换项目名称了，也可以自动获取到
+      
+      实现步骤:
+      a>、在 web.xml 中部署 PreparedServlet 追加 以下内容:
+      
+				      	<servlet>
+							<servlet-name>PreparedServlet</servlet-name>
+							<servlet-class>org.malajava.util.servlet.PreparedServlet</servlet-class>
+							<init-param>
+								<param-name>contextPathName</param-name>
+								<param-value>path</param-value>
+							</init-param>
+							<init-param>
+								<param-name>frontPathName</param-name>
+								<param-value>path</param-value>
+							</init-param>
+							<load-on-startup>1</load-on-startup>
+						</servlet>
+						<servlet-mapping>
+							<servlet-name>PreparedServlet</servlet-name>
+							<url-pattern>/prepared.js</url-pattern>
+						</servlet-mapping>
+      
+      b>、在所有的需要用到 Web 应用 路径的地方，采用以下形式替换:
+      		 $path
+      		 比如:
+      		 /wendao/login.do 变成 $path/login.do
+      		 /wendao/regist.do 变成 $path/regist.do
+      
+
+3、开发 "提问" 页面，并在页面中使用 simditor 编辑器
+
+      a>、在页面上导入 simditor 的 样式 和 JavaScript 库
+      
+	      	    <!-- 链接 simditor 的样式库 -->
+			   	<link rel="stylesheet"  href="$path/simditor/styles/simditor.css" type="text/css">
+				<!-- 导入 simditor 的 JavaScript 库 -->
+				<script type="text/javascript" src="$path/simditor/scripts/jquery.min.js"></script>
+				<script type="text/javascript" src="$path/simditor/scripts/module.js"></script>
+				<script type="text/javascript" src="$path/simditor/scripts/hotkeys.js"></script>
+				<script type="text/javascript" src="$path/simditor/scripts/uploader.js"></script>
+				<script type="text/javascript" src="$path/simditor/scripts/simditor.min.js"></script>
+      
+      b>、在相应的位置采用以下形式，生成编辑器:
+      
+      			<textarea name="content" id="contentEditor" ></textarea>
+				<script type="text/javascript" >
+					var editor = new Simditor( {
+						textarea : $('#contentEditor'),
+						placeholder : '请在这里输入问题的内容...',
+						toolbar : true 
+					} );
+				</script>
+				
+				注意 先写 textarea 再写 <script> 中的代码
+
+
+
+

@@ -1,0 +1,70 @@
+@CHARSET "UTF-8";
+
+/**这个文件是为 "问道" 准备的 样式库 ，在相应的页面上通过 link 标记来引入即可 */
+
+/** 定义 登录状态 区域的 样式 (一般出现在页面的最顶部 )*/
+.login-status-container { background: #F8F8F8 ; border-bottom: 1px solid #F0F0F0 ; }
+.login-status-container span { height: 30px ; line-height: 30px ; font-size: 14px ; }
+.login-status-container .welcome { text-align: left ; min-width: 120px ;  }
+.login-status-container .welcome b { margin-left: 5px ; font-weight: normal ; }
+.login-status-container .login-operation { text-align: right ; }
+.login-status-container .login-operation em { font-size: 12px ; margin-right : 5px ; }
+.login-status-container .login-operation a { color:#333 ; margin-right : 5px ; }
+
+/** 登录标志区域 的样式 (包含 logo 等信息) */
+.brand-container { }
+.brand-container .logo , .brand-container .slogan { height: 80px ;  line-height: 80px ; }
+.brand-container .logo a { float: left ; height: 60px ; width: 100px ; margin: 10px 0px ; background: url(../images/logo-red.png)  center ; background-size: cover ; }
+.brand-container .slogan { height: 80px ;  line-height: 80px ; }
+.brand-container .slogan h1 { font-weight: normal ; margin: 0px 0px ; }
+
+/** 定义问题列表的样式 */
+.topic-list-container { text-align : center ; min-height: 400px; }
+.topic-list-header { background-color: #1E90FF ; color: #FFFF00 ; font-size: 16px ; border-top: 1px solid #4c95ff ; border-bottom: 1px solid #4c95ff ; }
+.topic-list-header span { min-height: 40px ; line-height: 40px ; overflow: hidden ; font-weight: normal ; }
+.topic-list-container .even { background-color: #F8F8F8 ;}
+.topic-item { border-bottom: 1px solid #eee ;}
+.topic-item:hover { background: #fdffe7 ;  }
+.topic-item span { min-height: 40px ; line-height: 40px ; overflow: hidden ; font-weight: normal ; }
+
+/** 定义分页链接部分的样式 */
+.page-container { text-align : center ;height: 50px ; line-height: 50px ; background: #FAFAFA ; }
+
+/** 为提问页面中的提问区域定义样式 */
+.topic-ask-container { margin: 30px 2% ; text-align : left ; }
+.topic-ask-container .simditor { border : none ; }
+.topic-title-container span , .topic-ask-button-container span { height: 40px ; line-height: 40px ; }
+.topic-title-container input[type=text] { float:left ; height: 30px ; line-height: 30px ; font-size: 16px ; width: 96% ; padding-left:5px; margin-left: 0.5% ; margin-top : 4px ; border:1px solid #eee; outline: none ; }
+.topic-title-container input[type=text]:focus { border : 1px solid #ddd ; }
+.topic-title-container input[type=submit] , .topic-ask-button-container input[type=submit] { float: left ; width: 98% ;height: 33px ; line-height: 30px ; font-size: 16px ;margin-top : 4px ; border:none ; border-radius:3px; outline: none; background: #1E90FF ;color: #FFFFFF ; }
+.topic-title-container input[type=submit]:hover , .topic-ask-button-container input[type=submit]:hover { background: #4c95ff ;color: #FFFF00;}	
+
+/** 为 解答页面 、问题详情页面 中的 问题详情 部分定义样式 */
+.topic-detail-container , .explain-list-container { margin: 30px 2% ; border-radius: 3px ; }
+.topic-detail-title-container , .explain-answer-container { border-bottom: 1px solid #E0E0E0 ; text-align: center ; }
+.topic-detail-title-container span , .explain-item-container span { height: 40px ; line-height: 40px ; overflow: hidden ; }
+
+.topic-detail-flag , .explain-item-flag { background-color: #E6E6E6 ; color : #222 ; text-align: center ; font-size: 16px ; font-weight: bold ; }
+.topic-detail-title , .explain-item-answer { text-align: center ; font-size : 14px ; font-weight: normal ; }
+.topic-detail-asker-container  { border-top: 1px solid #E0E0E0 ; }
+.topic-detail-asker-container span { height: 30px ; line-height: 30px ; }
+
+.topic-detail-asker-container .topic-detail-asker { text-align: right ; }
+.topic-detail-asker-container .topic-detail-askit { text-align: center ; }
+
+.topic-detail-content , .explain-content { padding: 10px 10px ; overflow: hidden ; height: auto ; }
+
+/** 为 解答页面 中的 解答区域 定义样式 */
+.explain-container { margin: 30px 2% ; }
+.explain-container .simditor { border : none ; }
+.explain-container .explain-button { height: 40px ; line-height: 40px ; border-top: 1px solid #eee ;}
+.explain-container .explain-button input { float: right ; width : 10% ; height: 30px ; line-height : 28px ; margin:5px 5px; border: none ; border-radius : 3px ; outline: none ; color:#FFFF00; background-color: #1E90FF ; }
+.explain-container .explain-button input:hover { background-color: #4c95ff ; }
+
+.link-container { margin: 20px auto ; }
+
+/** 定义 版权信息 的样式 (一般在页脚部分显示) */
+.copyright-container { margin-top:20px ; text-align: center ; color : #333 ; }
+.copyright-container b { margin: 10px auto ; font-size: 12px ; }
+.copyright-container a { color : #333 ; }
+.copyright-container .malajava-logo { display:inline-block ; margin: 10px auto ; width : 60px ; height : 15px ; background: url(../images/malajava-logo.png) center no-repeat ; background-size: cover ; }

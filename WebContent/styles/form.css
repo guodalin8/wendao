@@ -1,0 +1,44 @@
+@charset "UTF-8";
+
+.form {
+    width: 40% ;
+    margin: 20px auto;
+    padding: 2px 0px ;
+    box-shadow: 0px 0px 5px 4px #cfcfcf;
+}
+
+.form-row {
+    border: 1px solid #dedede;
+    margin: 5px 5px ;
+    height: auto ; /*高度自动适应*/
+    overflow: hidden ; /*为解决内部有浮动元素时高度自动适应而添加*/
+}
+
+.form-row:hover {
+    border: 1px solid #89a9de;
+}
+
+/* 后代选择器 */
+.form-row  span {
+    height: 40px ;
+    line-height: 40px ;
+}
+
+.form-row  span  input[type=text] , .form-row  span  input[type=password] {
+    border: none ;
+    outline: none ;
+    width: 96%;
+}
+
+.form-row  span  input[type=reset] , .form-row  span  input[type=submit] {
+    border: none ;
+    outline: none ;
+    width: 98%;
+    height: 30px ;
+    background-color: #e8e8e8;
+    border-radius : 3px ;
+}
+
+.form-row  span  input[type=reset]:hover , .form-row  span  input[type=submit]:hover {
+    background-color: #dfdfdf;
+}

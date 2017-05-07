@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>注册问道</title>
+
+    <link rel="shortcut icon" href="$path/images/icon.png" type="image/png">
+
+    <link rel="stylesheet" href="$path/styles/general.css">
+    <link rel="stylesheet" href="$path/styles/cell.css">
+    <link rel="stylesheet" href="$path/styles/form.css">
+
+    <link rel="stylesheet" href="$path/awesome/css/font-awesome.min.css">
+    
+    <script type="text/javascript" src="$path/js/wendao.js"></script>
+
+    <style type="text/css" >
+
+        .logo-container {
+            margin-top: 50px ;
+        }
+        .logo-container img {
+            width: 100px ;
+        }
+
+        .message-container {
+            height: 80px ;
+        }
+
+        .link-container {
+            height: 40px ;
+            line-height: 40px ;
+        }
+
+        .link-container a {
+            text-decoration: none ;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div class="container logo-container">
+    <img src="images/logo-red.png" >
+</div>
+<div class="container title-container">注册问道，求学问道</div>
+<div class="container form-container">
+    <form action="$path/regist.do" method="post">
+        <div class="form"> <!-- 注册表单开始 -->
+
+            <div class="form-row">
+                        <span class="cell-1">
+                            <i class="fa fa-user"></i>
+                        </span>
+                        <span class="cell-11" style="text-align: left;">
+                            <input type="text" name="username" placeholder="请输入用户名">
+                        </span>
+            </div>
+
+            <div class="form-row">
+                        <span class="cell-1">
+                            <i class="fa fa-key"></i>
+                        </span>
+                        <span class="cell-11" style="text-align: left;">
+                            <input type="password" name="password" placeholder="请输入密码">
+                        </span>
+            </div>
+
+            <div class="form-row">
+                        <span class="cell-1">
+                            <i class="fa fa-keyboard-o"></i>
+                        </span>
+                        <span class="cell-11" style="text-align: left;">
+                            <input type="password" name="confirm" placeholder="请确认密码">
+                        </span>
+            </div>
+
+            <div class="form-row">
+                        <span class="cell-7">
+                            <input type="text" name="verifyCode" placeholder="请输入验证码">
+                        </span>
+                        <span class="cell-5" style="text-align: center;">
+                            <img src="$path/verify/regist.do"  onclick="myRefersh(this)">
+                        </span>
+            </div>
+
+            <div class="form-row" style="border: none;">
+                        <span class="cell-6" style="text-align: left">
+                           <input type="reset" value="重置">
+                        </span>
+                        <span class="cell-6"  style="text-align:right;">
+                            <input type="submit" value="注册">
+                        </span>
+            </div>
+
+        </div> <!-- 注册表单结束 -->
+    </form>
+</div>
+<div class="container message-container">
+    <!-- 显示提示信息的地方 -->
+    #if( $registFail ) 
+   		$registFail
+   		$scope.remove( $session , 'registFail' )
+    #end
+</div>
+<div class="container link-container">
+    <a href="$path/login.html" > 已注册问道帐号，点击这里登录问道</a>
+    |
+    <a href="$path/index.html" >返回首页</a>
+</div>
+<div class="container copyright-container">
+    &copy; 2017 问道版权所有
+</div>
+
+</body>
+</html>
